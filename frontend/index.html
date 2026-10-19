@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#123c3a">
+  <title>Library Management System</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+  <script src="/static/js/script.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="Library home"><span class="brand-mark">L</span><span>Open Shelf <small>Library system</small></span></a>
+    <div id="accountBar" class="account-bar" hidden>
+      <span id="accountName"></span>
+      <span id="accountRole" class="role-pill"></span>
+      <button id="logoutButton" class="button button-quiet" type="button">Sign out</button>
+    </div>
+  </header>
+
+  <main>
+    <section id="authScreen" class="auth-layout">
+      <div class="auth-intro">
+        <p class="eyebrow">YOUR COMMUNITY LIBRARY</p>
+        <h1>Find your next<br>good read.</h1>
+        <p>Search the collection, keep track of borrowed books, and see due dates in one place.</p>
+        <div class="auth-note"><span aria-hidden="true">✦</span><span>The first account created becomes the library administrator. All subsequent accounts are student accounts.</span></div>
+      </div>
+      <div class="auth-card">
+        <div class="auth-tabs" role="tablist" aria-label="Account access">
+          <button class="auth-tab active" type="button" data-auth-tab="login">Sign in</button>
+          <button class="auth-tab" type="button" data-auth-tab="register">Create account</button>
+        </div>
+        <form id="loginForm" class="form-stack">
+          <h2>Welcome back</h2>
+          <label>Email address<input name="email" type="email" autocomplete="email" required></label>
+          <label>Password<input name="password" type="password" autocomplete="current-password" required></label>
+          <button class="button button-primary" type="submit">Sign in</button>
+        </form>
+        <form id="registerForm" class="form-stack" hidden>
+          <h2>Join the library</h2>
+          <label>Full name<input name="name" autocomplete="name" maxlength="120" required></label>
+          <label>Email address<input name="email" type="email" autocomplete="email" required></label>
+          <label>Password<input name="password" type="password" autocomplete="new-password" minlength="8" required></label>
+          <button class="button button-primary" type="submit">Create account</button>
+        </form>
+        <p id="authMessage" class="message" role="status" aria-live="polite"></p>
+      </div>
+    </section>
+
+    <section id="appScreen" hidden>
+      <div class="welcome-row">
+        <div><p class="eyebrow">LIBRARY OVERVIEW</p><h1 id="welcomeHeading">Good to see you</h1></div>
+        <p class="fine-note">Late return fine: <strong id="fineRate"></strong> per day</p>
+      </div>
+      <div id="stats" class="stats-grid"></div>
+      <nav class="tabs" aria-label="Library sections">
+        <button class="nav-tab active" data-view="catalog" type="button">Book catalog</button>
+        <button class="nav-tab" data-view="loans" type="button">Issued books</button>
+        <button class="nav-tab" data-view="fines" type="button">Fines</button>
+        <button id="adminTab" class="nav-tab" data-view="admin" type="button" hidden>Admin · Add book</button>
+      </nav>
+      <p id="appMessage" class="message" role="status" aria-live="polite"></p>
+
+      <section id="view-catalog" class="view-panel">
+        <div class="section-heading"><div><p class="eyebrow">THE COLLECTION</p><h2>Browse books</h2></div>
+          <label class="search-box"><span class="visually-hidden">Search books</span><input id="bookSearch" type="search" placeholder="Search title, author, ISBN..."></label>
+        </div>
+        <div id="bookGrid" class="book-grid"></div>
+      </section>
+
+      <section id="view-loans" class="view-panel" hidden>
+        <div class="section-heading"><div><p class="eyebrow">CHECKOUTS</p><h2 id="loanHeading">Issued books</h2></div>
+          <select id="loanFilter" aria-label="Filter loans"><option value="">All loans</option><option value="active">Currently issued</option><option value="returned">Returned</option></select>
+        </div>
+        <div id="loanList" class="table-wrap"></div>
+      </section>
+
+      <section id="view-fines" class="view-panel" hidden>
+        <div class="section-heading"><div><p class="eyebrow">LATE RETURNS</p><h2>Fine records</h2></div></div>
+        <div id="fineList" class="table-wrap"></div>
+      </section>
+
+      <section id="view-admin" class="view-panel" hidden>
+        <div class="section-heading"><div><p class="eyebrow">LIBRARIAN TOOLS</p><h2>Add a book</h2></div></div>
+        <form id="addBookForm" class="book-form">
+          <label>Book title<input name="title" maxlength="200" required></label>
+          <label>Author<input name="author" maxlength="160" required></label>
+          <label>ISBN <span class="muted">(optional)</span><input name="isbn" maxlength="32"></label>
+          <label>Category<input name="category" maxlength="100" value="General"></label>
+          <label>Copies<input name="total_copies" type="number" min="1" max="10000" value="1" required></label>
+          <button class="button button-primary" type="submit">Add to catalog</button>
+        </form>
+        <form id="adminIssueForm" class="book-form admin-issue-form">
+          <h3>Issue a book to a student</h3>
+          <label>Book<select name="book_id" id="adminBookSelect" required></select></label>
+          <label>Student email<input name="student_email" type="email" required></label>
+          <button class="button button-dark" type="submit">Issue book</button>
+        </form>
+      </section>
+    </section>
+  </main>
+
+  <footer><span>Open Shelf Library Management</span><span>Books shared, knowledge grown.</span></footer>
+</body>
+</html>

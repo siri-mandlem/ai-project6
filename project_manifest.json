@@ -1,0 +1,76 @@
+{
+  "manifest_version": 1,
+  "project_name": "library_management_system",
+  "backend": {
+    "framework": "Flask",
+    "application": "backend.app:app",
+    "files": [
+      "backend/__init__.py",
+      "backend/app.py",
+      "backend/config.py",
+      "backend/models.py",
+      "backend/requirements.txt",
+      "backend/routes.py"
+    ]
+  },
+  "frontend": {
+    "files": [
+      "frontend/css/style.css",
+      "frontend/index.html",
+      "frontend/js/script.js"
+    ],
+    "pages": [
+      "/",
+      "/addbook",
+      "/dashboard",
+      "/finecalculation",
+      "/issuebook",
+      "/issuedbooks",
+      "/login",
+      "/register",
+      "/returnbook",
+      "/searchbooks"
+    ]
+  },
+  "database": {
+    "schema_file": "database/schema.sql",
+    "tables": ["users", "books", "book_loans", "fines"]
+  },
+  "api_contracts": [
+    {"method": "POST", "path": "/api/auth/register"},
+    {"method": "POST", "path": "/api/auth/login"},
+    {"method": "POST", "path": "/api/auth/logout"},
+    {"method": "GET", "path": "/api/auth/me"},
+    {"method": "GET", "path": "/api/dashboard"},
+    {"method": "GET", "path": "/api/books"},
+    {"method": "POST", "path": "/api/books"},
+    {"method": "POST", "path": "/api/issues"},
+    {"method": "GET", "path": "/api/issues"},
+    {"method": "POST", "path": "/api/issues/<int:loan_id>/return"},
+    {"method": "GET", "path": "/api/fines"},
+    {"method": "POST", "path": "/api/fines/<int:fine_id>/pay"}
+  ],
+  "dependencies": [
+    "Flask",
+    "Flask-SQLAlchemy",
+    "gunicorn",
+    "psycopg2-binary"
+  ],
+  "required_files": [
+    ".env.example",
+    "README.md",
+    "backend/__init__.py",
+    "backend/__init__.py",
+    "backend/app.py",
+    "backend/config.py",
+    "backend/models.py",
+    "backend/requirements.txt",
+    "backend/routes.py",
+    "database/schema.sql",
+    "frontend/css/style.css",
+    "frontend/index.html",
+    "frontend/js/script.js",
+    "project_manifest.json",
+    "tests/test_smoke.py"
+  ]
+}
